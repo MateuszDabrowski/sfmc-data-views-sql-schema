@@ -1,4 +1,6 @@
-# Salesforce Marketing Cloud System Views Schema
+# Salesforce Marketing Cloud System Data Views Schema
+
+Forked from [Sam Tylor](https://dbdiagram.io/d/5ff259ed80d742080a34e3c3).
 
 This repo contains a database file for your favorite database type if it's one of the following:
 
@@ -7,12 +9,6 @@ This repo contains a database file for your favorite database type if it's one o
 * SQLite
 * PostgreSQL
 
-Contained within are all the known official and unofficial system views (except \_MobileSubscription since it's effectively replaced my \_SMSSubscriptionLog).
+Contained within are official and unofficial system views. Work in Progress.
 
-I built the schema using [dbdesigner.net](https://www.dbdesigner.net/) in a "generic" mode, meaning that I didn't have the ability to specific between a couple of different field types like nvarchar and varchar.
-
-Foreign keys, primary keys, unique fields, etc have been identified to the best of my knowledge offhand. I haven't tested it completely yet. If anything is off, please submit a pull request or open an issue and I will make updates as soon as I can get to it.
-
-![schema](https://user-images.githubusercontent.com/879186/163687237-75769809-3c77-4b22-9de4-839c6e3a7a10.png)
-
-If you found this, and you're good with Marketing Cloud and you want to join a great consulting team, hit me up.
+Read more about [SFMC System Data Views](https://mateuszdabrowski.pl/docs/config/sfmc-config-system-data-views/).
