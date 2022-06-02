@@ -244,7 +244,7 @@ CREATE TABLE "public._JourneyActivity" (
 	"VersionID" varchar(36) NOT NULL,
 	"ActivityID" varchar(36) NOT NULL UNIQUE,
 	"ActivityName" varchar(200),
-	"ActivityExternalKey" varchar(200) NOT NULL UNIQUE,
+	"ActivityExternalKey" varchar(200) NOT NULL,
 	"JourneyActivityObjectID" varchar(36),
 	"ActivityType" varchar(512),
 	CONSTRAINT "_JourneyActivity_pk" PRIMARY KEY ("ActivityExternalKey")
