@@ -143,6 +143,7 @@ CREATE TABLE `_Coupon` (
 
 CREATE TABLE `_EnterpriseAttribute` (
 	`_SubscriberID` INT NOT NULL
+	-- Can have more custom created fields
 );
 
 CREATE TABLE `_FTAF` (
@@ -196,6 +197,45 @@ CREATE TABLE `_JourneyActivity` (
 	`JourneyActivityObjectID` varchar(36),
 	`ActivityType` varchar(512),
 	PRIMARY KEY (`ActivityExternalKey`)
+);
+
+CREATE TABLE `_AutomationInstance` (
+	`MemberID` INT NOT NULL,
+	`AutomationName` varchar(400) NOT NULL,
+	`AutomationDescription` varchar(400),
+	`AutomationCustomerKey` varchar(400) NOT NULL,
+	`AutomationInstanceID` varchar(36) NOT NULL UNIQUE,
+	`AutomationType` varchar(9) NOT NULL,
+	`AutomationNotificationRecipient_Complete` varchar(500),
+	`AutomationNotificationRecipient_Error` varchar(500),
+	`AutomationNotificationRecipient_Skip` varchar(500),
+	`AutomationStepCount` INT NOT NULL,
+	`AutomationInstanceIsRunOnce` BOOLEAN NOT NULL,
+	`FilenameFromTrigger` varchar(4000),
+	`AutomationInstanceScheduledTime_UTC` DATETIME,
+	`AutomationInstanceStartTime_UTC` DATETIME,
+	`AutomationInstanceEndTime_UTC` DATETIME,
+	`AutomationInstanceStatus` varchar(400) NOT NULL,
+	`AutomationInstanceActivityErrorDetails` varchar(400),
+	PRIMARY KEY (`AutomationInstanceID`)
+);
+
+CREATE TABLE `_AutomationActivityInstance` (
+	`MemberID` INT NOT NULL,
+	`AutomationName` varchar(400) NOT NULL,
+	`AutomationCustomerKey` varchar(400) NOT NULL,
+	`AutomationInstanceID` varchar(36) NOT NULL,
+	`ActivityCustomerKey` varchar(400) NOT NULL,
+	`ActivityInstanceID` varchar(36) NOT NULL UNIQUE,
+	`ActivityType` INT NOT NULL,
+	`ActivityName` varchar(400) NOT NULL,
+	`ActivityDescription` varchar(400),
+	`ActivityInstanceStep` varchar(25) NOT NULL,
+	`ActivityInstanceStartTime_UTC` DATETIME,
+	`ActivityInstanceEndTime_UTC` DATETIME,
+	`ActivityInstanceStatus` varchar(256) NOT NULL,
+	`ActivityInstanceActivityErrorDetails` varchar(4000),
+	PRIMARY KEY (`ActivityInstanceID`)
 );
 
 CREATE TABLE `_ListSubscribers` (
@@ -481,6 +521,20 @@ ALTER TABLE `_FTAF` ADD CONSTRAINT `_FTAF_fk1` FOREIGN KEY (`SubscriberID`) REFE
 ALTER TABLE `_FTAF` ADD CONSTRAINT `_FTAF_fk2` FOREIGN KEY (`SubscriberKey`) REFERENCES `_Subscribers`(`SubscriberKey`);
 
 ALTER TABLE `_JourneyActivity` ADD CONSTRAINT `_JourneyActivity_fk0` FOREIGN KEY (`VersionID`) REFERENCES `_Journey`(`VersionID`);
+
+ALTER TABLE `_JourneyActivity` ADD CONSTRAINT `_JourneyActivity_fk1` FOREIGN KEY (`JourneyActivityObjectID`) REFERENCES `_Job`(`TriggeredSendDefinitionObjectID`);
+
+ALTER TABLE `_JourneyActivity` ADD CONSTRAINT `_JourneyActivity_fk2` FOREIGN KEY (`JourneyActivityObjectID`) REFERENCES `_Sent`(`TriggeredSendDefinitionObjectID`);
+
+ALTER TABLE `_JourneyActivity` ADD CONSTRAINT `_JourneyActivity_fk3` FOREIGN KEY (`JourneyActivityObjectID`) REFERENCES `_Open`(`TriggeredSendDefinitionObjectID`);
+
+ALTER TABLE `_JourneyActivity` ADD CONSTRAINT `_JourneyActivity_fk4` FOREIGN KEY (`JourneyActivityObjectID`) REFERENCES `_Click`(`TriggeredSendDefinitionObjectID`);
+
+ALTER TABLE `_JourneyActivity` ADD CONSTRAINT `_JourneyActivity_fk5` FOREIGN KEY (`JourneyActivityObjectID`) REFERENCES `_Bounce`(`TriggeredSendDefinitionObjectID`);
+
+ALTER TABLE `_JourneyActivity` ADD CONSTRAINT `_JourneyActivity_fk6` FOREIGN KEY (`JourneyActivityObjectID`) REFERENCES `_FTAF`(`TriggeredSendDefinitionObjectID`);
+
+ALTER TABLE `_AutomationInstance` ADD CONSTRAINT `_AutomationInstance_fk0` FOREIGN KEY (`AutomationInstanceID`) REFERENCES `_AutomationActivityInstance`(`AutomationInstanceID`);
 
 ALTER TABLE `_ListSubscribers` ADD CONSTRAINT `_ListSubscribers_fk0` FOREIGN KEY (`SubscriberID`) REFERENCES `_Subscribers`(`SubscriberID`);
 
